@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mintwatch: launches not minted yet</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14"/><circle cx="16" cy="16" r="8.5"/><path d="M16 16 L27 9"/><circle class="blip" cx="22.5" cy="11.5" r="2.4"/></svg><b>Mintwatch</b><span>token launch radar</span></div>
+  <div class="meta" id="meta"></div>
+  <div class="checks" id="checks"></div>
+</header>
+<main>
+  <section class="hero">
+    <div class="lede" id="lede"></div>
+    <figure class="scope"><svg id="scope" viewBox="-34 6 488 408" role="img" aria-label="Radar of every pre-token protocol by sector and implied value"></svg><figcaption id="scopeKey"></figcaption></figure>
+  </section>
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+  <section id="boardView">
+    <form class="filters" id="filters" onsubmit="return false"></form>
+    <p class="count" id="count"></p>
+    <div class="tablewrap"><table id="board"><thead></thead><tbody></tbody></table></div>
+  </section>
+  <section id="otherView" hidden></section>
+</main>
+<aside class="detail" id="detail" hidden aria-live="polite"></aside>
+<script src="../data.js"></script>
+<script src="model.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
