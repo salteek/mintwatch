@@ -7,7 +7,7 @@
 //
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts --input <kit>/input/snapshot.json
 
-import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -57,9 +57,12 @@ writeFileSync(join(out, 'board.json'), `${JSON.stringify({ model: 'mintwatch-1',
 const board = rows.map((r: any) => [r.slug, r.rank, r.implied_value_usd]);
 writeFileSync(join(out, 'data.js'), `window.SNAPSHOT=${JSON.stringify(snapshot)};\nwindow.BOARD=${JSON.stringify(board)};\n`);
 
+// Copy a directory's regular files, and drop any file a previous run left in `to` that the source no
+// longer holds (a stale screenshot would otherwise reach the dossier and break its image cap).
 function copyDir(from: string, to: string): string[] {
   mkdirSync(to, { recursive: true });
   const names = readdirSync(from).filter((n) => !n.startsWith('.') && statSync(join(from, n)).isFile()).sort();
+  for (const n of readdirSync(to)) if (!names.includes(n) && statSync(join(to, n)).isFile()) unlinkSync(join(to, n));
   for (const n of names) copyFileSync(join(from, n), join(to, n));
   return names;
 }
